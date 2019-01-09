@@ -52,7 +52,8 @@ public class RegisterActivity extends AppCompatActivity {
                     if (Character.isDigit(s.toString().charAt(0))){
                         username.setError("the user can't start with number");
                     }
-                }
+                    System.out.println();
+ }
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length()==0){
