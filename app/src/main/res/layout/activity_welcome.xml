@@ -35,4 +35,23 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="84dp"
         android:text="Register" />
+
+    <TextView
+        android:id="@+id/textViewConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="164dp"
+        android:layout_marginBottom="423dp" />
+
+    <Button
+        android:id="@+id/reconnectbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="-13dp"
+        android:layout_toStartOf="@+id/signinbtn"
+        android:text="Button" />
 </RelativeLayout>

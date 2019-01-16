@@ -11,10 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+
 public class RegisterActivity extends AppCompatActivity {
 
     EditText name;
-    EditText familyname;
+    EditText lastName;
     EditText username;
     EditText email;
     EditText pass;
@@ -22,14 +27,16 @@ public class RegisterActivity extends AppCompatActivity {
     RadioButton silver;
     RadioButton green;
     Button register;
-
+    DataInputStream dis;
+    DataOutputStream dos;
+    Socket socket;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         name = findViewById(R.id.namergs);
-        familyname = findViewById(R.id.familyrgs);
+        lastName = findViewById(R.id.familyrgs);
         username = findViewById(R.id.userrgs);
         email = findViewById(R.id.emailrgs);
         pass = findViewById(R.id.passrgs);
@@ -38,8 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
         green = findViewById(R.id.green);
         register = findViewById(R.id.registerrgs);
 
+        socket = (Socket) getIntent().getSerializableExtra("Socket");
 
- username.addTextChangedListener(new TextWatcher() {
+        System.out.println(socket.getPort());
+
+
+        username.addTextChangedListener(new TextWatcher() {
                 @Override
 
 
@@ -125,7 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.length()==0){
-                    name.setError("name is empty");
+                    name.setError("name is empty.");
                 }
             }
         });
@@ -140,9 +151,20 @@ public class RegisterActivity extends AppCompatActivity {
                 String username1 = username.getText().toString();
                 String pass1 = pass.getText().toString();
                 String email1 = email.getText().toString();
-                String familyname1 = familyname.getText().toString();
+                String lastName1 = lastName.getText().toString();
+                try {
+                    dos.writeUTF("register");
+                    dos.writeUTF(name1);
+                    dos.writeUTF(username1);
+                    dos.writeUTF(pass1);
+                    dos.writeUTF(email1);
+                    dos.writeUTF(lastName1);
+                    
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                User user = new User(name1,familyname1,username1,pass1,email1);
+                User user = new User(name1,lastName1,username1,pass1,email1);
 
 //                Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
 //                startActivity(intent);
