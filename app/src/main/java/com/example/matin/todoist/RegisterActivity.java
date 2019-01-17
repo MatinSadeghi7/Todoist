@@ -63,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (Character.isDigit(s.toString().charAt(0))){
                         username.setError("the user can't start with number");
                     }
-                    System.out.println();
+
  }
             @Override
             public void afterTextChanged(Editable s) {
@@ -159,12 +159,10 @@ public class RegisterActivity extends AppCompatActivity {
                     dos.writeUTF(pass1);
                     dos.writeUTF(email1);
                     dos.writeUTF(lastName1);
-                    
+                    dos.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                User user = new User(name1,lastName1,username1,pass1,email1);
 
 //                Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
 //                startActivity(intent);
