@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,12 +16,12 @@ public class Server {
     static ArrayList<User> users = new ArrayList<>();
     static int client;
     public static void main(String[] args) throws IOException {
-        users.addAll(Serializable.readData());
+        users.addAll(SaveData.readData());
         Reader reader = new BufferedReader(new FileReader("ClientId"));
         client = reader.read();
         ServerSocket serverSocket = new ServerSocket(222);
         Socket clientSocket;
-        Serializable.readData();
+        SaveData.readData();
         try {
             while (true) {
                 clientSocket = serverSocket.accept();
