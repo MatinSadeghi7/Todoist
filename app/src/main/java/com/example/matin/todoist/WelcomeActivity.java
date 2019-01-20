@@ -23,8 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
     Button reconnectButton;
     Socket socket;
     TextView textView;
-    DataOutputStream dos;
-    DataInputStream dis;
     Scanner scanner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +64,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             try {
                 //Log.v("=========>", "sadeghi");
-                socket = new Socket("172.20.10.5", 3000);
+                socket = new Socket("192.168.43.254", 3000);
                 Log.v("=========>" , "matin");
                 SocketSingelton.setSocket(socket);
             }

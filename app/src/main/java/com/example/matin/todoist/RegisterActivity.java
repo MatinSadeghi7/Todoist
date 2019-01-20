@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     DataInputStream dis;
     DataOutputStream dos;
     Socket socket;
+    TextView error;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         silver = findViewById(R.id.silver);
         green = findViewById(R.id.green);
         register = findViewById(R.id.registerrgs);
-
-        //Bundle bundle = getIntent().getExtras();
-        
-
+        error = findViewById(R.id.errorrgs);
 
 
         username.addTextChangedListener(new TextWatcher() {
@@ -102,7 +101,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 boolean flag = false;
                 for (int i = 0; i <s.length() ; i++) {
-                    if (s.toString().charAt(i) == '@' && s.toString().endsWith(".com") ) {
+                    if (s.toString().charAt(i) == '@' && s.toString().contains(".") ) {
                         flag = true;
                     }
 
@@ -127,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()==0){
+                if (s.length()<=8){
                     pass.setError("pass is empty");
                 }
             }
@@ -161,37 +160,11 @@ public class RegisterActivity extends AppCompatActivity {
                 String pass1 = pass.getText().toString();
                 String email1 = email.getText().toString();
                 String lastName1 = lastName.getText().toString();
+                if (name.equals(null) || username.equals(null) || pass.equals(null) || email.equals(null)){
+                    error.setText("information is not complete.");
+                }
+                new DownloadFilesTask().execute(name1, lastName1, email1, username1, pass1);
 
-                new DownloadFilesTask().execute(name1, username1, pass1 , email1 , lastName1);
-
-//                try {
-//                    Log.v("==========>asma", "inja");
-//                    try{
-//                        dos.writeUTF("register");
-//                    }
-//                    catch (Exception e){
-//                        Log.v("==========>", e.toString());
-//                    }
-//                    dos.writeUTF("register");
-//                    Log.v("==========>asma", "inja 2");
-//                    dos.flush();
-//                    Log.v("==========>asma", "unja");
-//
-//
-//                    dos.writeUTF(name1);
-//                    dos.flush();
-//                    dos.writeUTF(username1);
-//                    dos.flush();
-//
-//                    dos.writeUTF(pass1);
-//                    dos.flush();
-//                    dos.writeUTF(email1);
-//                    dos.flush();
-//                    dos.writeUTF(lastName1);
-//                    dos.flush();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
 
                 Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
                 startActivity(intent);
@@ -209,20 +182,24 @@ public class RegisterActivity extends AppCompatActivity {
 
         // these Strings / or String are / is the parameters of the task, that can be handed over via the excecute(params) method of AsyncTask
         protected Long doInBackground(String... params) {
+            Log.v("param0" , params[0]);
+            Log.v("param1" , params[1]);
+            Log.v("param2" , params[2]);
+            Log.v("param3" , params[3]);
+            Log.v("param4" , params[4]);
 
-            String param1 = params[0];
 
             try {
                 Log.v("==========>asma", "inja");
                 try{
                     dos.writeUTF("register");
+                    dos.flush();
                 }
                 catch (Exception e){
                     Log.v("==========>", e.toString());
                 }
-                dos.writeUTF("register");
+
                 Log.v("==========>asma", "inja 2");
-                dos.flush();
                 Log.v("==========>asma", "unja");
 
 
@@ -237,6 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
                 dos.flush();
                 dos.writeUTF(params[4]);
                 dos.flush();
+//                dos.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

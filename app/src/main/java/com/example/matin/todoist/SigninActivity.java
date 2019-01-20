@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -23,6 +24,7 @@ public class SigninActivity extends AppCompatActivity {
     Socket socket;
     DataOutputStream dos;
     DataInputStream dis;
+    TextView error;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -33,7 +35,9 @@ public class SigninActivity extends AppCompatActivity {
         useroremail = findViewById(R.id.useroremailsgn);
         pass = findViewById(R.id.passsgn);
         signinbtn = findViewById(R.id.donesign);
+        error = findViewById(R.id.errorsgn);
         socket = SocketSingelton.getSocket();
+
         try {
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream(socket.getInputStream());
@@ -43,22 +47,22 @@ public class SigninActivity extends AppCompatActivity {
 
 
 
-        signinbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String useroremail1 = useroremail.getText().toString();
-                String pass1 = pass.getText().toString();
-                try {
-
-                    dos.writeUTF("signin");
-                    dos.writeUTF(useroremail1);
-                    dos.writeUTF(pass1);
-                    dos.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        signinbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String useroremail1 = useroremail.getText().toString();
+//                String pass1 = pass.getText().toString();
+//                try {
+//
+//                    dos.writeUTF("signin");
+//                    dos.writeUTF(useroremail1);
+//                    dos.writeUTF(pass1);
+//                    dos.flush();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
 
 signinbtn.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +74,8 @@ public void onClick(View v) {
 
         new DownloadFilesTask().execute( usernameoremail,pass1);
 
-        Intent intent = new Intent(SigninActivity.this, TaskActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(SigninActivity.this, TaskActivity.class);
+//        startActivity(intent);
         }
         });
 
@@ -80,6 +84,7 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
 
     // these Strings / or String are / is the parameters of the task, that can be handed over via the excecute(params) method of AsyncTask
     protected Long doInBackground(String... params) {
+        long someLong = 0;
 
        // String param1 = params[0];
 
@@ -102,6 +107,14 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
             dos.writeUTF(params[1]);
             dos.flush();
 
+             String status = dis.readUTF();
+             if (status.equals("ok")){
+                 someLong = 1;
+             }else if (status.equals("notok")){
+                 someLong = 0;
+             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,7 +124,7 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
         // be careful, this can easily result in a ArrayIndexOutOfBounds exception
         // if you try to access more parameters than you handed over
 
-        long someLong=0;
+
         int someInt=0;
 
         // do something here with params
@@ -133,6 +146,13 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
 
     // the onPostexecute method receives the return type of doInBackGround()
     protected void onPostExecute(Long result) {
+        if (result==1){
+            Intent intent = new Intent(SigninActivity.this, TaskActivity.class);
+            startActivity(intent);
+        }else if (result ==0){
+            error.setText("incorrect information");
+
+        }
         // do something with the result, for example display the received Data in a ListView
         // in this case, "result" would contain the "someLong" variable returned by doInBackground();
     }
