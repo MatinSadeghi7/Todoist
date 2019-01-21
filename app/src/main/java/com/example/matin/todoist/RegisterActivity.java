@@ -70,15 +70,18 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (Character.isDigit(s.toString().charAt(0))){
-                        username.setError("the user can't start with number");
-                    }
+
 
  }
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length()==0){
                     username.setError("user is empty");
+                   // register.setVisibility(View.INVISIBLE);
+                }
+                if (Character.isDigit(s.toString().charAt(0))){
+                    username.setError("the user can't start with number");
+                    // register.setVisibility(View.INVISIBLE);
                 }
 
             }
@@ -126,8 +129,33 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length()<=8){
-                    pass.setError("pass is empty");
+                if(s.length()==0){
+                    pass.setError("password is empty.");
+                    //register.setVisibility(View.INVISIBLE);
+                }
+                if (s.length()<=8 && s.length()!=0){
+                    pass.setError("password is not strong enough.");
+                    //register.setVisibility(View.INVISIBLE);
+                }
+                boolean hasLower = false;
+                boolean hasUpper = false;
+                boolean hasNumber = false;
+
+                for(int i= 0; i < s.length();i++){
+                    char ch = s.charAt(i);
+                    if(Character.isLowerCase(ch)){
+                        hasLower = true;
+                    }
+                    if (Character.isUpperCase(ch)){
+                        hasUpper = true;
+                    }
+                    if(Character.isDigit(ch)){
+                        hasNumber = true;
+                    }
+                }
+                if(!(hasLower && hasNumber && hasUpper)){
+                    pass.setError("password should involve at least a capital character, a small character and a digit.");
+                    //register.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -147,6 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length()==0){
                     name.setError("name is empty.");
+                    //register.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -160,14 +189,25 @@ public class RegisterActivity extends AppCompatActivity {
                 String pass1 = pass.getText().toString();
                 String email1 = email.getText().toString();
                 String lastName1 = lastName.getText().toString();
-                if (name.equals(null) || username.equals(null) || pass.equals(null) || email.equals(null)){
-                    error.setText("information is not complete.");
+                String type = null;
+
+
+                if (gold.isChecked()) {
+                    type = "gold";
+                } else if (silver.isChecked()) {
+                    type = "silver";
+                } else if (green.isChecked()) {
+                    type = "green";
                 }
-                new DownloadFilesTask().execute(name1, lastName1, email1, username1, pass1);
 
 
-                Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
-                startActivity(intent);
+                if (name.equals(null) || username.equals(null) || pass.equals(null) || email.equals(null)) {
+                    error.setText("information is not complete.");
+                } else {
+                    new DownloadFilesTask().execute(name1, lastName1, email1, username1, pass1, type);
+                    Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -213,6 +253,8 @@ public class RegisterActivity extends AppCompatActivity {
                 dos.writeUTF(params[3]);
                 dos.flush();
                 dos.writeUTF(params[4]);
+                dos.flush();
+                dos.writeUTF(params[5]);
                 dos.flush();
 //                dos.close();
             } catch (IOException e) {
