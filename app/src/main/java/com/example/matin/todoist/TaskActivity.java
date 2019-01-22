@@ -19,12 +19,22 @@ public class TaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task);
         fb1 = findViewById(R.id.createNewTaskfb);
         listView = findViewById(R.id.listview);
-
+        final Bundle bundle = getIntent().getExtras();
         fb1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(bundle.getString("type").equals("green")){
                 Intent intent = new Intent(TaskActivity.this , GreenUserActivity.class);
                 startActivity(intent);
+                }
+                else if(bundle.getString("type").equals("silver")){
+                    Intent intent = new Intent(TaskActivity.this , SilverActivity.class);
+                    startActivity(intent);
+                }
+                else if(bundle.getString("type").equals("gold")){
+                    Intent intent = new Intent(TaskActivity.this , GoldActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

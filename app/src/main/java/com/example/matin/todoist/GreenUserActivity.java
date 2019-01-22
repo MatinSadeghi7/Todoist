@@ -1,5 +1,6 @@
 package com.example.matin.todoist;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -7,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.time.Year;
 import java.util.Calendar;
 
 public class GreenUserActivity extends AppCompatActivity {
@@ -58,6 +61,17 @@ public class GreenUserActivity extends AppCompatActivity {
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                year = calendar.get(Calendar.YEAR);
+                month = calendar.get(Calendar.MONTH);
+                day = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(contextDate, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                      showdate.setText(year + "/" + month + "/" + dayOfMonth);
+                    }
+                },year , month , day);
+                datePickerDialog.show();
 
             }
         });
