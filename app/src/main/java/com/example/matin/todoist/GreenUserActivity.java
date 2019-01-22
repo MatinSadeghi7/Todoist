@@ -40,9 +40,10 @@ public class GreenUserActivity extends AppCompatActivity {
     RadioButton priority1;
     RadioButton priority2;
     RadioButton priority3;
+    Button create ;
     Socket socket = SocketSingelton.getSocket();
-        DataOutputStream dos;
-        DataInputStream dis;
+    DataOutputStream dos;
+    DataInputStream dis;
 
 
 
@@ -61,7 +62,7 @@ public class GreenUserActivity extends AppCompatActivity {
         priority1 = findViewById(R.id.priority1Green);
         priority2 = findViewById(R.id.priority2Green);
         priority3 = findViewById(R.id.priority3Green);
-
+        create = findViewById(R.id.createButtonGreen2);
         try {
             dos = new DataOutputStream(socket.getOutputStream());
             dis = new DataInputStream (socket.getInputStream());
@@ -101,6 +102,16 @@ public class GreenUserActivity extends AppCompatActivity {
                     }
                 },year , month , day);
                 datePickerDialog.show();
+
+
+            }
+
+
+        });
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String title1 = title.getText().toString();
                 String detail1 = detail.getText().toString();
                 String priority = null;
@@ -117,10 +128,9 @@ public class GreenUserActivity extends AppCompatActivity {
                 String day1 = Integer.toString(day);
                 String hour1 = Integer.toString(hour);
                 String minute1 = Integer.toString(minute);
+                Log.v("teeeeeeeeeeeeeeeeeeest " , "maaaaaaaaaaaaaaaaaaat");
 
                 new DownloadFilesTask().execute(title1 , detail1 , priority,year1,month1,day1,hour1,minute1);
-
-
 
             }
         });
@@ -136,6 +146,9 @@ public class GreenUserActivity extends AppCompatActivity {
             Log.v("param2" , params[2]);
             Log.v("param3" , params[3]);
             Log.v("param4" , params[4]);
+            Log.v("param5" , params[5]);
+            Log.v("param6" , params[6]);
+            Log.v("param7" , params[7]);
 
 
             try {

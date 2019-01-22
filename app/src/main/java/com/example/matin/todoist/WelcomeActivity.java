@@ -64,7 +64,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             try {
                 //Log.v("=========>", "sadeghi");
-                socket = new Socket("172.20.126.178", 3000);
+                socket = new Socket("172.20.126.178", 5050);
                 Log.v("=========>" , "matin");
                 SocketSingelton.setSocket(socket);
             }
