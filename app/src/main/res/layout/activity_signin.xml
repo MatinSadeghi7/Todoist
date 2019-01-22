@@ -13,24 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="235dp"
+        android:layout_marginBottom="337dp"
         android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/donesign"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="148dp"
-        android:layout_marginTop="353dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="110dp"
-        android:text="Sign in" />
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/useroremailsgn"
@@ -38,10 +25,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="151dp"
+        android:layout_marginTop="65dp"
         android:ems="10"
-        android:hint="UserName  or Email"
-        android:inputType="textPersonName" />
+        android:hint="Username or Email"
+        android:inputType="textPersonName"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/errorsgn"
@@ -50,5 +38,32 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="187dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="76dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="189dp"
+        android:layout_marginEnd="74dp"
+        android:layout_marginBottom="246dp"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/donesign"
+        android:layout_width="142dp"
+        android:layout_height="93dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="326dp"
+        android:layout_marginBottom="92dp"
+        android:text="sign in"
+        android:textSize="20sp" />
 
 </RelativeLayout>

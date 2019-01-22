@@ -55,7 +55,7 @@
     <RadioGroup
         android:id="@+id/radioGroup2"
         android:layout_width="147dp"
-        android:layout_height="119dp"
+        android:layout_height="127dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -66,24 +66,26 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.707">
+        app:layout_constraintVertical_bias="0.75">
 
         <RadioButton
             android:id="@+id/gold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Gold User" />
+            android:text="Gold User"
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/silver"
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_weight="1"
-            android:text="Silver User" />
+            android:text="Silver User"
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/green"
@@ -91,7 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Green User" />
+            android:text="Green User"
+            android:textSize="18sp" />
     </RadioGroup>
 
     <EditText
@@ -138,8 +141,8 @@
 
     <Button
         android:id="@+id/registerrgs"
-        android:layout_width="152dp"
-        android:layout_height="54dp"
+        android:layout_width="173dp"
+        android:layout_height="66dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -149,11 +152,13 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/bck"
         android:text="Register"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintVertical_bias="0.981" />
 
     <EditText
         android:id="@+id/userrgs"
