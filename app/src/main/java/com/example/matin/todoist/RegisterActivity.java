@@ -201,13 +201,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
 
-                if (name1.equals(null) || username1.equals(null) || pass1.equals(null) || email1.equals(null)) {
+                if (name1.length() == 0 || username1.length()==0 || pass1.length() == 0 || email1.length() == 0) {
                     Log.v("asma","asmaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     error.setText("information is not complete.");
-                } else if(!(name1.equals(null) || username1.equals(null) || pass1.equals(null) || email1.equals(null))){
+                } else if(!(name1.length() == 0 || username1.length()==0 || pass1.length() == 0 || email1.length() == 0)){
                     new DownloadFilesTask().execute(name1, lastName1, email1, username1, pass1, type);
                     Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
-                    //intent.putExtra("type",type);
+                    intent.putExtra("type",type);
                     startActivity(intent);
                 }
             }
