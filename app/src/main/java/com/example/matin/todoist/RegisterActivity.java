@@ -2,7 +2,6 @@ package com.example.matin.todoist;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
 import java.net.Socket;
 
@@ -35,6 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
     DataOutputStream dos;
     Socket socket;
     TextView error;
+    TextView error2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         green = findViewById(R.id.green);
         register = findViewById(R.id.registerrgs);
         error = findViewById(R.id.errorrgs);
-
+        error2 = findViewById(R.id.textView5);
 
         username.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -191,7 +191,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String lastName1 = lastName.getText().toString();
                 String type = null;
 
-
                 if (gold.isChecked()) {
                     type = "gold";
                 } else if (silver.isChecked()) {
@@ -206,9 +205,9 @@ public class RegisterActivity extends AppCompatActivity {
                     error.setText("information is not complete.");
                 } else if(!(name1.length() == 0 || username1.length()==0 || pass1.length() == 0 || email1.length() == 0)){
                     new DownloadFilesTask().execute(name1, lastName1, email1, username1, pass1, type);
-                    Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
-                    intent.putExtra("type",type);
-                    startActivity(intent);
+//                    Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
+//                    intent.putExtra("type",type);
+//                    startActivity(intent);
                 }
             }
         });
@@ -220,16 +219,17 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-    private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
+    private class DownloadFilesTask extends AsyncTask<String, Integer, String> {
 
         // these Strings / or String are / is the parameters of the task, that can be handed over via the excecute(params) method of AsyncTask
-        protected Long doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             Log.v("param0" , params[0]);
             Log.v("param1" , params[1]);
             Log.v("param2" , params[2]);
             Log.v("param3" , params[3]);
             Log.v("param4" , params[4]);
             Log.v("param5" , params[5]);
+            String someString = null;
 
 
             try {
@@ -259,6 +259,9 @@ public class RegisterActivity extends AppCompatActivity {
                 dos.flush();
                 dos.writeUTF(params[5]);
                 dos.flush();
+                String isExsisted= null;
+                isExsisted = dis.readUTF();
+                someString= params[5] + "@" + isExsisted ;
 //                dos.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -269,7 +272,7 @@ public class RegisterActivity extends AppCompatActivity {
             // be careful, this can easily result in a ArrayIndexOutOfBounds exception
             // if you try to access more parameters than you handed over
 
-            long someLong=0;
+
             int someInt=0;
             //passAA222
             // do something here with params
@@ -282,7 +285,7 @@ public class RegisterActivity extends AppCompatActivity {
             // parse the data and return it to the onPostExecute() method
             // in this example the return data is simply a long value
             // this could also be a list of your custom-objects, ...
-            return someLong;
+            return someString;
         }
 
         // this is called whenever you call puhlishProgress(Integer), for example when updating a progressbar when downloading stuff
@@ -290,7 +293,21 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         // the onPostexecute method receives the return type of doInBackGround()
-        protected void onPostExecute(Long result) {
+        protected void onPostExecute(String result) {
+
+            String [] array = new String[2];
+            array = result.split("@",2);
+            String result1 = array[0];
+            String result2 = array[1];
+
+            if (result2.equals("notexisting")) {
+                Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
+                intent.putExtra("type", result1);
+                startActivity(intent);
+            }else if(result2.equals("existing")){
+                error2.setText("existing");
+
+            }
             // do something with the result, for example display the received Data in a ListView
             // in this case, "result" would contain the "someLong" variable returned by doInBackground();
         }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -17,6 +18,7 @@ import java.util.Calendar;
 public class SilverActivity extends AppCompatActivity {
 Button time1;
 Button date1;
+Button create;
 TextView showdate1;
 TextView showtime1;
 int year;
@@ -26,6 +28,7 @@ int minute;
 int day;
 Context contextTime = this;
 Context contextDate = this;
+SeekBar priority;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,10 @@ Context contextDate = this;
         date1 = findViewById(R.id.DateButtonSilver);
         showdate1 = findViewById(R.id.showDateSilver);
         showtime1 = findViewById(R.id.showTimeSilver);
+        priority = findViewById(R.id.seekBar);
+        create = findViewById(R.id.createsilver);
+
+
 
 
 
@@ -71,6 +78,7 @@ Context contextDate = this;
 
             }
         });
+
     }
     }
 
