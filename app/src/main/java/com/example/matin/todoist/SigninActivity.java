@@ -81,11 +81,11 @@ public void onClick(View v) {
         });
 
         }
-private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
+private class DownloadFilesTask extends AsyncTask<String, Integer, String> {
 
     // these Strings / or String are / is the parameters of the task, that can be handed over via the excecute(params) method of AsyncTask
-    protected Long doInBackground(String... params) {
-        long someLong = 0;
+    protected String doInBackground(String... params) {
+        String result = null;
 
 //        String param1 = params[0];
 
@@ -113,13 +113,15 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
              String status = dis.readUTF();
              Log.v("statuuuuuussss", status);
              if (status.equals("ok")){
-
                  String type1 = dis.readUTF();
                  Log.v("typeeeeeeeeeeeeeeee",type1);
+                 result = status +"@"+ type1;
+                    return  result;
 
-                 someLong = 1;
              }else if (status.equals("notok")){
-                 someLong = 0;
+
+                 result = "notok";
+                 return result;
              }
 
 
@@ -145,7 +147,7 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
         // parse the data and return it to the onPostExecute() method
         // in this example the return data is simply a long value
         // this could also be a list of your custom-objects, ...
-        return someLong;
+        return result;
     }
 
     // this is called whenever you call puhlishProgress(Integer), for example when updating a progressbar when downloading stuff
@@ -153,11 +155,15 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
     }
 
     // the onPostexecute method receives the return type of doInBackGround()
-    protected void onPostExecute(Long result) {
-        if (result==1){
+    protected void onPostExecute(String result) {
+        String [] array = result.split("@",2);
+
+        if (array[0].equals("ok")){
             Intent intent = new Intent(SigninActivity.this, TaskActivity.class);
+
+           intent.putExtra("type",array[1]);
             startActivity(intent);
-        }else if (result ==0){
+        }else if (result.equals("notok")){
             error.setText("incorrect information");
 
         }
