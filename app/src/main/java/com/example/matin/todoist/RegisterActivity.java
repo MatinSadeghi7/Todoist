@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                     pass.setError("password is empty.");
                     //register.setVisibility(View.INVISIBLE);
                 }
-                if (s.length()<=8 && s.length()!=0){
+                if (s.length()<8 && s.length()!=0){
                     pass.setError("password is not strong enough.");
                     //register.setVisibility(View.INVISIBLE);
                 }
@@ -207,7 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else if(!(name1.equals(null) || username1.equals(null) || pass1.equals(null) || email1.equals(null))){
                     new DownloadFilesTask().execute(name1, lastName1, email1, username1, pass1, type);
                     Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
-                    intent.putExtra("type",type);
+                    //intent.putExtra("type",type);
                     startActivity(intent);
                 }
             }
@@ -229,6 +229,7 @@ public class RegisterActivity extends AppCompatActivity {
             Log.v("param2" , params[2]);
             Log.v("param3" , params[3]);
             Log.v("param4" , params[4]);
+            Log.v("param5" , params[5]);
 
 
             try {
@@ -242,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
                 Log.v("==========>asma", "inja 2");
-                Log.v("==========>asma", "unja");
+
 
 
                 dos.writeUTF(params[0]);
@@ -270,7 +271,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             long someLong=0;
             int someInt=0;
-
+            //passAA222
             // do something here with params
             // the params could for example contain an url and you could download stuff using this url here
 

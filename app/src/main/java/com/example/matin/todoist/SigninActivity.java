@@ -2,6 +2,7 @@ package com.example.matin.todoist;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -86,7 +87,7 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
     protected Long doInBackground(String... params) {
         long someLong = 0;
 
-       // String param1 = params[0];
+//        String param1 = params[0];
 
         try {
             Log.v("==========>asma", "inja signin");
@@ -101,6 +102,8 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
 //            dos.flush();
 //            Log.v("==========>asma", "unja");
 
+            Log.v("paraaaaaam0" , params[0]);
+            Log.v("paraaaaaam1" , params[1]);
 
             dos.writeUTF(params[0]);
             dos.flush();
@@ -108,7 +111,12 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
             dos.flush();
 
              String status = dis.readUTF();
+             Log.v("statuuuuuussss", status);
              if (status.equals("ok")){
+
+                 String type1 = dis.readUTF();
+                 Log.v("typeeeeeeeeeeeeeeee",type1);
+
                  someLong = 1;
              }else if (status.equals("notok")){
                  someLong = 0;
