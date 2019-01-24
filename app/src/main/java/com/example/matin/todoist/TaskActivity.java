@@ -28,10 +28,10 @@ public class TaskActivity extends AppCompatActivity {
     FloatingActionButton fb1 ;
     ListView listView;
     Socket socket = SocketSingelton.getSocket();
-   static ObjectInputStream objectInputStream;
-    static ObjectOutputStream objectOutputStream;
-    DataInputStream dataInputStream;
-    DataOutputStream dataOutputStream;
+   //static ObjectInputStream objectInputStream;
+    //static ObjectOutputStream objectOutputStream;
+    static DataInputStream dataInputStream;
+    static DataOutputStream dataOutputStream;
     static ArrayList<Task> array = null;
 
 
@@ -83,18 +83,17 @@ public class TaskActivity extends AppCompatActivity {
 
         // these Strings / or String are / is the parameters of the task, that can be handed over via the excecute(params) method of AsyncTask
         protected ArrayList<Task> doInBackground(String... params) {
-            ArrayList<Task> array = null;
+            String str = null;
 
             try {
-                //dataInputStream = new DataInputStream(socket.getInputStream());
-                //dataOutputStream = new DataOutputStream(socket.getOutputStream());
-                objectInputStream = new ObjectInputStream(socket.getInputStream());
-                objectOutputStream =  new ObjectOutputStream(socket.getOutputStream());
+                dataInputStream = new DataInputStream(socket.getInputStream());
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                //objectInputStream = new ObjectInputStream(socket.getInputStream());
+               // objectOutputStream =  new ObjectOutputStream(socket.getOutputStream());
                 Log.v("==================>>" , socket.toString());
-                Log.v("==================>>" , objectInputStream.toString());
-                array = (ArrayList<Task>) objectInputStream.readObject();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+               // Log.v("==================>>" , objectInputStream.toString());
+                str =  dataInputStream.readUTF();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

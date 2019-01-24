@@ -85,8 +85,8 @@ public class WelcomeActivity extends AppCompatActivity {
                 try {
                     dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     dataInputStream = new DataInputStream(socket.getInputStream());
-                    objectOutputStream =  new ObjectOutputStream(socket.getOutputStream());
-                    objectInputStream = new ObjectInputStream(socket.getInputStream());
+                   // objectOutputStream =  new ObjectOutputStream(socket.getOutputStream());
+                   // objectInputStream = new ObjectInputStream(socket.getInputStream());
 
                 } catch (IOException e) {
                     e.printStackTrace();
