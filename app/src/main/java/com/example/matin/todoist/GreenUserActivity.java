@@ -26,11 +26,17 @@ import java.util.Date;
 public class GreenUserActivity extends AppCompatActivity {
     Button time;
     int hour;
-    int minute;
+    int nowMinute;
     Button date;
     int year;
     int month;
     int day;
+    int hourrr;
+    int minutett;
+    int yearrr;
+    int monthhh;
+    int dayyy;
+
     Context contextTime = this;
     Context contextDate = this;
     TextView showdate;
@@ -77,15 +83,17 @@ public class GreenUserActivity extends AppCompatActivity {
                 Log.v("===============>>>" , socket.toString());
                 Calendar calendar = Calendar.getInstance();
                 hour = calendar.get(Calendar.HOUR_OF_DAY);
-                minute = calendar.get(Calendar.MINUTE);
+                nowMinute = calendar.get(Calendar.MINUTE);
                 TimePickerDialog tpd = new TimePickerDialog(contextTime, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         showtime.setText(hourOfDay + ":" + minute);
-
+                        hourrr = hourOfDay;
+                        minutett = minute;
 
                     }
-                },hour , minute , android.text.format.DateFormat.is24HourFormat(contextTime));
+//                },hour , minute , android.text.format.DateFormat.is24HourFormat(contextTime));
+                },hour , nowMinute , false);
                 tpd.show();
             }
         });
@@ -100,9 +108,14 @@ public class GreenUserActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                       showdate.setText(year + "/" + month + "/" + dayOfMonth);
+                      yearrr = year;
+                      monthhh = month;
+                      dayyy = dayOfMonth;
+
                     }
                 },year , month , day);
                 datePickerDialog.show();
+
 
 
             }
@@ -124,11 +137,14 @@ public class GreenUserActivity extends AppCompatActivity {
                 }else if (priority3.isChecked()){
                     priority = "100";
                 }
-                String year1 = Integer.toString(year);
-                String month1 = Integer.toString(month);
-                String day1 = Integer.toString(day);
-                String hour1 = Integer.toString(hour);
-                String minute1 = Integer.toString(minute);
+
+
+
+                String year1 = Integer.toString(yearrr);
+                String month1 = Integer.toString(monthhh);
+                String day1 = Integer.toString(dayyy);
+                String hour1 = Integer.toString(hourrr);
+                String minute1 = Integer.toString(minutett);
                 Log.v("teeeeeeeeeeeeeeeeeeest " , "maaaaaaaaaaaaaaaaaaat");
 
                 new DownloadFilesTask().execute(title1 , detail1 , priority,year1,month1,day1,hour1,minute1);
