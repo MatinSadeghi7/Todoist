@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.util.Scanner;
@@ -24,6 +26,11 @@ public class WelcomeActivity extends AppCompatActivity {
     Socket socket;
     TextView textView;
     Scanner scanner;
+    static ObjectOutputStream objectOutputStream;
+    static ObjectInputStream objectInputStream;
+    static DataOutputStream dataOutputStream;
+    static DataInputStream dataInputStream;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +42,16 @@ public class WelcomeActivity extends AppCompatActivity {
         textView = findViewById(R.id.textViewConnect);
         registerBtn = findViewById(R.id.registerbtn);
         signInBtn = findViewById(R.id.signinbtn);
+
+//        try {
+//            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+//            dataInputStream = new DataInputStream(socket.getInputStream());
+//            objectOutputStream =  new ObjectOutputStream(socket.getOutputStream());
+//            objectInputStream = new ObjectInputStream(socket.getInputStream());
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +82,15 @@ public class WelcomeActivity extends AppCompatActivity {
             try {
                 //Log.v("=========>", "sadeghi");
                 socket = new Socket("172.20.126.178", 5050);
+                try {
+                    dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                    dataInputStream = new DataInputStream(socket.getInputStream());
+                    objectOutputStream =  new ObjectOutputStream(socket.getOutputStream());
+                    objectInputStream = new ObjectInputStream(socket.getInputStream());
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 Log.v("=========>" , "matin");
                 SocketSingelton.setSocket(socket);
             }
