@@ -93,6 +93,7 @@ private class DownloadFilesTask extends AsyncTask<String, Integer, String> {
             Log.v("==========>asma", "inja signin");
             try{
                 dos.writeUTF("login");
+                dos.flush();
             }
             catch (Exception e){
                 Log.v("==========>", e.toString());

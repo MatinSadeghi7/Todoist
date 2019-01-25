@@ -3,6 +3,7 @@ package com.example.matin.todoist;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -148,6 +153,8 @@ public class GreenUserActivity extends AppCompatActivity {
                 Log.v("teeeeeeeeeeeeeeeeeeest " , "maaaaaaaaaaaaaaaaaaat");
 
                 new DownloadFilesTask().execute(title1 , detail1 , priority,year1,month1,day1,hour1,minute1);
+                Intent intent = new Intent(GreenUserActivity.this , TaskActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -156,7 +163,7 @@ public class GreenUserActivity extends AppCompatActivity {
 
     private class DownloadFilesTask extends AsyncTask<String, Integer, Long> {
 
-        // these Strings / or String are / is the parameters of the task, that can be handed over via the excecute(params) method of AsyncTask
+
         protected Long doInBackground(String... params) {
             Log.v("param0" , params[0]);
             Log.v("param1" , params[1]);
@@ -187,43 +194,72 @@ public class GreenUserActivity extends AppCompatActivity {
                 dos.flush();
                 dos.writeUTF(params[7]);
                 dos.flush();
-//                dos.close();
+                String str = null;
+
+                try {
+                    dis = new DataInputStream(socket.getInputStream());
+                    dos = new DataOutputStream(socket.getOutputStream());
+
+                    Log.v("==================>>" , socket.toString());
+
+                    str =  dis.readUTF();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            // and so on...
-            // do something with the parameters...
-            // be careful, this can easily result in a ArrayIndexOutOfBounds exception
-            // if you try to access more parameters than you handed over
+
 
             long someLong=0;
             int someInt=0;
 
-            // do something here with params
-            // the params could for example contain an url and you could download stuff using this url here
 
-            // the Integer variable is used for progress
             publishProgress(someInt);
 
-            // once the data is downloaded (for example JSON data)
-            // parse the data and return it to the onPostExecute() method
-            // in this example the return data is simply a long value
-            // this could also be a list of your custom-objects, ...
+
             return someLong;
         }
 
-        // this is called whenever you call puhlishProgress(Integer), for example when updating a progressbar when downloading stuff
+
         protected void onProgressUpdate(Integer... progress) {
         }
 
-        // the onPostexecute method receives the return type of doInBackGround()
+
         protected void onPostExecute(Long result) {
-            // do something with the result, for example display the received Data in a ListView
-            // in this case, "result" would contain the "someLong" variable returned by doInBackground();
+
+
+
         }
 
-        public void execute(String title1, String detail1, String priority, int year, int month, int day, int hour, int minute) {
+        private ArrayList<Task> stringToArray(String str){
+            ArrayList<Task> arr = new ArrayList<>();
+            String[] tasks = str.split("$");
+            for (int i = 0; i < tasks.length ; i++) {
+                arr.add(stringToTask(tasks[i]));
+            }
+            return arr;
+        }
+        private Task stringToTask(String str){
+            String[] properties = str.split("#");
+            Task task=null;
+            if (properties.length == 3 )
+                task = new Task(properties[0] , properties[1] , properties[2]);
+            else
+                try {
+                    task = new Task(properties[0] , properties[1] , properties[2] ,new SimpleDateFormat("yyyy/MM/dd").parse(properties[3]),new Time(Integer.valueOf(properties[4])));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            return task;
+        }
+
+
+        //public void execute(String title1, String detail1, String priority, int year, int month, int day, int hour, int minute) {
         }
     }
-}
+

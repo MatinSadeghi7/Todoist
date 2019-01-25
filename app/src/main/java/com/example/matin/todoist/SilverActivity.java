@@ -3,6 +3,7 @@ package com.example.matin.todoist;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +78,14 @@ SeekBar priority;
                 datePickerDialog.show();
 
             }
+        });
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SilverActivity.this , TaskActivity.class);
+                startActivity(intent);
+            }
+
         });
 
     }

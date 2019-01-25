@@ -34,6 +34,10 @@ public class RegisterActivity extends AppCompatActivity {
     Socket socket;
     TextView error;
     TextView error2;
+    Boolean nameIsOk = true;
+    Boolean userIsOk = true;
+    Boolean passIsOk = true;
+    Boolean emailIsOk = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,19 +74,28 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.length()>1) {
+                        if (Character.isDigit(s.toString().charAt(0))) {
+                            username.setError("the user can't start with number");
+                            userIsOk =false;
+                            register.setClickable(false);
+                        }
 
-
+                    }else {
+                        register.setClickable(true);
+                    }
  }
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.length()==0){
+                    userIsOk =false;
                     username.setError("user is empty");
-                   // register.setVisibility(View.INVISIBLE);
-                }
-                if (Character.isDigit(s.toString().charAt(0))){
-                    username.setError("the user can't start with number");
+                    register.setClickable(false);
+
                     // register.setVisibility(View.INVISIBLE);
-                }
+                }else register.setClickable(true);
+
+
 
             }
         });
@@ -101,7 +114,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length()==0){
                     email.setError("email is empty");
-                }
+                    emailIsOk = false;
+                    register.setClickable(false);
+
+                }else  register.setClickable(true);
+
                 boolean flag = false;
                 for (int i = 0; i <s.length() ; i++) {
                     if (s.toString().charAt(i) == '@' && s.toString().contains(".") ) {
@@ -110,8 +127,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }if (flag==false){
                         email.setError("the format of email isn't true");
+                        emailIsOk = false;
+                        register.setClickable(false);
 
-                        }
+
+                }else register.setClickable(true);
                     }
 
         });
@@ -131,12 +151,19 @@ public class RegisterActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(s.length()==0){
                     pass.setError("password is empty.");
+                    passIsOk =false;
+                    register.setClickable(false);
+
                     //register.setVisibility(View.INVISIBLE);
-                }
+                }else register.setClickable(true);
                 if (s.length()<8 && s.length()!=0){
                     pass.setError("password is not strong enough.");
+                    passIsOk =false;
+                    register.setClickable(false);
+
                     //register.setVisibility(View.INVISIBLE);
-                }
+                }else register.setClickable(true);
+
                 boolean hasLower = false;
                 boolean hasUpper = false;
                 boolean hasNumber = false;
@@ -155,8 +182,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 if(!(hasLower && hasNumber && hasUpper)){
                     pass.setError("password should involve at least a capital character, a small character and a digit.");
+                    passIsOk =false;
+                    register.setClickable(false);
+
                     //register.setVisibility(View.INVISIBLE);
-                }
+                }else register.setClickable(true);
             }
         });
 
@@ -175,8 +205,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if (s.length()==0){
                     name.setError("name is empty.");
+                    nameIsOk = false;
+                    register.setClickable(false);
+
                     //register.setVisibility(View.INVISIBLE);
-                }
+                }else register.setClickable(true);
             }
         });
 
@@ -304,6 +337,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Intent intent = new Intent(RegisterActivity.this, TaskActivity.class);
                 intent.putExtra("type", result1);
                 startActivity(intent);
+                finish();
             }else if(result2.equals("existing")){
                 error2.setText("existing");
 

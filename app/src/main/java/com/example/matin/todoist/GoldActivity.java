@@ -3,6 +3,7 @@ package com.example.matin.todoist;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.Calendar;
 public class GoldActivity extends AppCompatActivity {
     Button time1;
     Button date1;
+    Button create;
     TextView showdate1;
     TextView showtime1;
     int year;
@@ -33,6 +35,7 @@ public class GoldActivity extends AppCompatActivity {
         date1 = findViewById(R.id.dateButtonGold);
         showdate1 = findViewById(R.id.showDateGold);
         showtime1 = findViewById(R.id.showTimeGold);
+        create = findViewById(R.id.creategold);
 
 
 
@@ -68,6 +71,14 @@ public class GoldActivity extends AppCompatActivity {
                 },year , month , day);
                 datePickerDialog.show();
 
+            }
+        });
+
+        create.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GoldActivity.this , Task.class);
+                startActivity(intent);
             }
         });
     }
